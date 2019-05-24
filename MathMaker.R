@@ -22,7 +22,7 @@ server <- function(input, output, session) {
   
   #Events for symbol-input buttons
   #cat MathJax into main & clear symbol input box
-  observeEvent(input$b8, { #sqrt
+  observeEvent(input$b8, { #sqare root
     x <- input$tempBox
     if(!x=='' && !x=='syntax error'){
       updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\sqrt{',x,'}\\)'))
@@ -43,7 +43,7 @@ server <- function(input, output, session) {
   observeEvent(input$b10, { #fraction
     x <- unlist(strsplit(input$tempBox, ','))
     if(length(x) == 2){
-      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\frac{',x[1],'}{',x[2],'}\\)') )
+      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\frac{',x[1],'}{',x[2],'}\\)'))
       updateTextInput(session,'tempBox', value = '')}
     else{
       updateTextInput(session,'tempBox', value = 'syntax error')
