@@ -26,7 +26,7 @@ server <- function(input, output, session) {
     x <- input$tempBox
     if(!x=='' && !x=='syntax error'){
       updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\sqrt{',x,'}\\)'))
-    updateTextInput(session,'tempBox', value = '')}
+      updateTextInput(session,'tempBox', value = '')}
     else{
       updateTextInput(session,'tempBox', value = 'syntax error')
     }
@@ -34,8 +34,8 @@ server <- function(input, output, session) {
   observeEvent(input$b9, { #exponent (fix this)
     x <- input$tempBox
     if(!x=='' && !x=='syntax error'){
-    updateTextInput(session,'mainBox', value = paste0(input$mainBox, '$$^',x,'$$'))
-    updateTextInput(session,'tempBox', value = '')}
+      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '$$^',x,'$$'))
+      updateTextInput(session,'tempBox', value = '')}
     else{
       updateTextInput(session,'tempBox', value = 'syntax error')
     }
@@ -43,7 +43,7 @@ server <- function(input, output, session) {
   observeEvent(input$b10, { #fraction
     x <- unlist(strsplit(input$tempBox, ','))
     if(length(x) == 2){
-      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\frac{',x[1],'}{',x[2],'}\\)'))
+      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\frac{',x[1],'}{',x[2],'}\\)') )
       updateTextInput(session,'tempBox', value = '')}
     else{
       updateTextInput(session,'tempBox', value = 'syntax error')
