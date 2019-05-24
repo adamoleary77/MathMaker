@@ -19,17 +19,35 @@ server <- function(input, output, session) {
   observeEvent(input$b5, {updateTextInput(session, 'mainBox', value = paste0(input$mainBox, '\\(\\ge\\)'))})
   observeEvent(input$b6, {updateTextInput(session, 'mainBox', value = paste0(input$mainBox, '\\(\\le\\)'))})
   observeEvent(input$b7, {updateTextInput(session, 'mainBox', value = paste0(input$mainBox, '\\(\\infty\\)'))})
+  
   #Events for symbol-input buttons
   #cat MathJax into main & clear symbol input box
-  observeEvent(input$b8, {
+  observeEvent(input$b8, { #sqrt
     x <- input$tempBox
-    updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\sqrt{',x,'}\\)'))
-    updateTextInput(session,'tempBox', value = '')
+    if(!x=='' && !x=='syntax error'){
+      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\sqrt{',x,'}\\)'))
+    updateTextInput(session,'tempBox', value = '')}
+    else{
+      updateTextInput(session,'tempBox', value = 'syntax error')
+    }
     })
-  observeEvent(input$b9, {
+  observeEvent(input$b9, { #exponent (fix this)
     x <- input$tempBox
+    if(!x=='' && !x=='syntax error'){
     updateTextInput(session,'mainBox', value = paste0(input$mainBox, '$$^',x,'$$'))
-    updateTextInput(session,'tempBox', value = '')
+    updateTextInput(session,'tempBox', value = '')}
+    else{
+      updateTextInput(session,'tempBox', value = 'syntax error')
+    }
+  })
+  observeEvent(input$b10, { #fraction
+    x <- unlist(strsplit(input$tempBox, ','))
+    if(length(x) == 2){
+      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(\\frac{',x[1],'}{',x[2],'}\\)'))
+      updateTextInput(session,'tempBox', value = '')}
+    else{
+      updateTextInput(session,'tempBox', value = 'syntax error')
+    }
   })
 }
 
@@ -50,7 +68,8 @@ ui <- fluidPage(
       textInput("tempBox", "Symbol Input", width = '100px'),
       helpText("Type in the Main text box and your text will be translated to the output header."),
       helpText("Use the Symbol Input text box for symbols that require values."),
-      helpText("ex) type 2 in the Symbol Input box then click the \\(\\sqrt{x}\\) button.")
+      helpText("ex) type 2 in the Symbol Input box then click the \\(\\sqrt{x}\\) button."),
+      helpText("type numerator then denominator separated by a comma for fractions.")
     ),
     
     #Buttons column
@@ -58,6 +77,8 @@ ui <- fluidPage(
       #Symbol input buttons     
       actionButton('b8', '\\(\\sqrt{x}\\)', width = '50px', style="padding:0px; font-size:200%"),
       actionButton('b9', '$$x^e$$', width = '40px', style="padding:0px; font-size:200%"),
+      actionButton('b10', '\\(\\frac{x}{y}\\)', width = '40px', style="padding:0px; font-size:200%"),
+      
       #No symbol input buttons
       actionButton('b1', '\\(\\theta\\)', width = '50px', style="padding:0px; font-size:200%"),
       actionButton('b2', '\\(\\pi\\)', width = '40px', style="padding:0px; font-size:200%"),
