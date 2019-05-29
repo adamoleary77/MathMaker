@@ -31,10 +31,10 @@ server <- function(input, output, session) {
       updateTextInput(session,'tempBox', value = 'syntax error')
     }
     })
-  observeEvent(input$b9, { #exponent (fix this)
+  observeEvent(input$b9, { #exponent
     x <- input$tempBox
     if(!x=='' && !x=='syntax error'){
-      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '$$^',x,'$$'))
+      updateTextInput(session,'mainBox', value = paste0(input$mainBox, '\\(^',x,'\\)'))
       updateTextInput(session,'tempBox', value = '')}
     else{
       updateTextInput(session,'tempBox', value = 'syntax error')
