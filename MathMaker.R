@@ -6,7 +6,7 @@ server <- function(input, output, session) {
   #render header output from main text box
   output$display <- renderUI({ 
     withMathJax(
-      h4((paste0("> ", input$mainBox)))
+        h2('> ',input$mainBox, style= 'font-size:500%')
       )
     })
   
